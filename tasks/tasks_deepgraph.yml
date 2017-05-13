@@ -1,8 +1,8 @@
 ---
-  
+
   - name: Deepgraph | Install package dependencies
-    pip: name="{{item}}
-    become: yes 
+    pip: name="{{item}}"
+    become: yes
     with_items:
       - numpy
       - scipy
@@ -16,7 +16,7 @@
       - deepgraph
 
   - name: Deepgraph | Install scikit-learn
-    pip: name="{{item}}                                                             
+    pip: name="{{item}}"
     become: yes
     with_items:
       - scikit-learn
@@ -25,24 +25,28 @@
       - deepgraph
 
   - name: Deepgraph | Install networkx
-    pip: name="{{item}}
+    pip: name="{{item}}"
     become: yes
     with_items:
-      - networkx      
+      - networkx
     tags:
       - deepgraph
 
   - block:
 
+      - name: Deepgraph | Add apt key
+        apt_key:
+          keyserver: pgp.skewed.de
+          id: 98507F25
 
       - name: Deepgraph | Add apt repository
-        apt_repository: repo="deb http://downloads.skewed.de/apt/ {{ansible_distribution_release}} universe" state=present update_cache=yes
+        apt_repository: repo="deb http://downloads.skewed.de/apt/{{ansible_distribution_release}} {{ansible_distribution_release}} universe" state=present update_cache=yes
         become: yes
         tags:
          - deepgraph
 
       - name: Deepgraph | Add apt repository
-        apt_repository: repo="deb-src http://downloads.skewed.de/apt/ {{ansible_distribution_release}} universe" state=present update_cache=yes
+        apt_repository: repo="deb-src http://downloads.skewed.de/apt/{{ansible_distribution_release}} {{ansible_distribution_release}} universe" state=present update_cache=yes
         become: yes
         tags:
          - deepgraph
@@ -59,15 +63,19 @@
 
   - block:
 
+      - name: Deepgraph | Add apt key
+        apt_key:
+          keyserver: pgp.skewed.de
+          id: 98507F25
 
       - name: Deepgraph | Add apt repository
-        apt_repository: repo="deb http://downloads.skewed.de/apt/ {{ansible_distribution_release}} main" state=present update_cache=yes
+        apt_repository: repo="deb http://downloads.skewed.de/apt/{{ansible_distribution_release}} {{ansible_distribution_release}} main" state=present update_cache=yes
         become: yes
         tags:
          - deepgraph
 
       - name: Deepgraph | Add apt repository
-        apt_repository: repo="deb-src http://downloads.skewed.de/apt/ {{ansible_distribution_release}} main" state=present update_cache=yes
+        apt_repository: repo="deb-src http://downloads.skewed.de/apt/{{ansible_distribution_release}} {{ansible_distribution_release}} main" state=present update_cache=yes
         become: yes
         tags:
          - deepgraph
@@ -82,10 +90,9 @@
 
 
   - name: Deepgraph | Install deephraph
-    pip: name="{{item}}
+    pip: name="{{item}}"
     become: yes
     with_items:
       - deepgraph
     tags:
       - deepgraph
-
