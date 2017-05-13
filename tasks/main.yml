@@ -1,0 +1,10 @@
+---
+# tasks file for sa-deepgraph
+
+  - include: tasks_python.yml
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - include: yum/tasks_python_yum.yml
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+  - include: tasks_deepgraph.yml

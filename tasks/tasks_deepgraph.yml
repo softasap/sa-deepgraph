@@ -1,0 +1,91 @@
+---
+  
+  - name: Deepgraph | Install package dependencies
+    pip: name="{{item}}
+    become: yes 
+    with_items:
+      - numpy
+      - scipy
+      - matplotlib
+      - ipython
+      - jupyter
+      - pandas
+      - sympy
+      - node
+    tags:
+      - deepgraph
+
+  - name: Deepgraph | Install scikit-learn
+    pip: name="{{item}}                                                             
+    become: yes
+    with_items:
+      - scikit-learn
+      - sklearn-pandas
+    tags:
+      - deepgraph
+
+  - name: Deepgraph | Install networkx
+    pip: name="{{item}}
+    become: yes
+    with_items:
+      - networkx      
+    tags:
+      - deepgraph
+
+  - block:
+
+
+      - name: Deepgraph | Add apt repository
+        apt_repository: repo="deb http://downloads.skewed.de/apt/ {{ansible_distribution_release}} universe" state=present update_cache=yes
+        become: yes
+        tags:
+         - deepgraph
+
+      - name: Deepgraph | Add apt repository
+        apt_repository: repo="deb-src http://downloads.skewed.de/apt/ {{ansible_distribution_release}} universe" state=present update_cache=yes
+        become: yes
+        tags:
+         - deepgraph
+
+      - name: Deepgraph | python-graph-tool
+        apt: update-cache=yes pkg=python-graph-tool state=latest
+        become: yes
+        tags:
+         - deepgraph
+
+
+    when: ansible_distribution == 'Ubuntu'
+
+
+  - block:
+
+
+      - name: Deepgraph | Add apt repository
+        apt_repository: repo="deb http://downloads.skewed.de/apt/ {{ansible_distribution_release}} main" state=present update_cache=yes
+        become: yes
+        tags:
+         - deepgraph
+
+      - name: Deepgraph | Add apt repository
+        apt_repository: repo="deb-src http://downloads.skewed.de/apt/ {{ansible_distribution_release}} main" state=present update_cache=yes
+        become: yes
+        tags:
+         - deepgraph
+
+      - name: Deepgraph | python-graph-tool
+        apt: update-cache=yes pkg=python-graph-tool state=latest
+        become: yes
+        tags:
+         - deepgraph
+
+    when: ansible_distribution == 'Debian'
+
+
+  - name: Deepgraph | Install deephraph
+    pip: name="{{item}}
+    become: yes
+    with_items:
+      - deepgraph
+    tags:
+      - deepgraph
+
