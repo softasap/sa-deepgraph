@@ -1,6 +1,13 @@
 ---
 
   - name: Deepgraph | Install package dependencies
+    yum: name=gcc update_cache=yes state=latest
+    become: yes
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'    
+    tags:
+      -python
+
+  - name: Deepgraph | Install package dependencies
     pip: name="{{item}}"
     become: yes
     with_items:
